@@ -1,0 +1,22 @@
+{
+  "name": "inferno",
+  "version": "1.0.0",
+  "description": "Dante's original discord music bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TERADA-DANTE/Inferno.git"
+  },
+  "author": "TERADA DANTE",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TERADA-DANTE/Inferno/issues"
+  },
+  "homepage": "https://github.com/TERADA-DANTE/Inferno#readme",
+  "dependencies": {
+    "discord.js": "^12.0.2"
+  }
+}
