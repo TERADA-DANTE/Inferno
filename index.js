@@ -26,13 +26,12 @@ client.login(config.TOKEN)
 // get message from user
 client.on('message', async message => {
 
-    const serverQueue = queue.get(message.guild.id)
+    const serverQueue = queue.set(message.guild.id)
     // prevent direct message
     if (message.channel.type === 'dm') return false
     // only starts with prefix 
     // is this necessary? - no
     // if (!message.content.startsWith === config.prefix) console.log('ee')
-
     if (message.content.startsWith(`${config.prefix}play`)) {
         execute(message, serverQueue)
         return
@@ -97,13 +96,12 @@ async function execute(message, serverQueue) {
 // function play
 function play(guild, music) {
     const serverQueue = queue.get(guild.id);
-
     if (!music) {
         serverQueue.voiceChannel.leave();
         queue.delete(guild.id);
         return;
     }
-    const dispatcher = serverQueue.connection.play(ytdl(music.url))
+    const dispatcher = serverQueue.connection.playStream(ytdl(music.url))
         .on('end', () => {
             console.log('Music ended!');
             serverQueue.musics.shift();
