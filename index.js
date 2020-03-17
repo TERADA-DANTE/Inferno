@@ -82,12 +82,20 @@ client.on('message', message => {
                         })
                 }
                 break
+                // skip one track
             case '=skip':
                 var server = servers[message.guild.id]
+
+                if (server.queue[0]) message.channel.send("Music Skipped...")
                 if (server.dispatcher) server.dispatcher.end()
                 break
-            case '=stop':
-                execute(message, servers)
+                // clear playlist 
+            case '=clear':
+                var server = servers[message.guild.id]
+                if (server.queue[0]) {
+                    message.channel.send("Playlist clear ☑")
+                    server.queue = []
+                }
                 break
             case '=clear':
                 execute(message, servers)
@@ -133,8 +141,11 @@ client.on('message', message => {
             if (server.queue[0]) {
                 play(connection, message)
             } else {
-                // queue end
-                message.channel.send("Playlist is clear ✅")
+                message.channel.send("Playlist end ✅")
+                setTimeout(() => {
+                    message.channel.send("Inferno is goint to sleep 💤")
+                    message.member.voice.channel.leave()
+                }, 60000)
             }
         })
     }
