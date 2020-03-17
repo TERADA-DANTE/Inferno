@@ -143,8 +143,10 @@ client.on('message', message => {
             } else {
                 message.channel.send("Playlist end ✅")
                 setTimeout(() => {
-                    message.channel.send("Inferno is goint to sleep 💤")
-                    message.member.voice.channel.leave()
+                    if (client.voice.connections.size) {
+                        message.channel.send("Inferno is goint to sleep 💤")
+                        message.member.voice.channel.leave()
+                    }
                 }, 60000)
             }
         })
