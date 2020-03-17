@@ -59,7 +59,7 @@ client.on('message', message => {
                     }
                 }
                 // variable for queue
-                const server = servers[message.guild.id]
+                var server = servers[message.guild.id]
 
                 // Youtube link check
                 if (/[a-zA-Z0-9-_]{11}/.test(args[1]) === false) {
@@ -74,6 +74,7 @@ client.on('message', message => {
                         .then((connection) => {
                             if (server.queue[0]) {
                                 server.queue.push(args[1])
+                                message.reply("Your music added to Playlist 💙")
                             } else {
                                 server.queue.push(args[1])
                                 play(connection, message)
@@ -82,7 +83,8 @@ client.on('message', message => {
                 }
                 break
             case '=skip':
-                execute(message, servers)
+                var server = servers[message.guild.id]
+                if (server.dispatcher) server.dispatcher.end()
                 break
             case '=stop':
                 execute(message, servers)
@@ -105,7 +107,7 @@ client.on('message', message => {
     // COMMAND - =play
     async function play(connection, message) {
         // variables
-        const server = servers[message.guild.id]
+        var server = servers[message.guild.id]
         const songInfo = await ytdl.getInfo(server.queue[0])
         const stream = ytdl(server.queue[0])
 
@@ -122,6 +124,7 @@ client.on('message', message => {
             }
         }))
 
+
         // handleFinish
         server.dispatcher.on('finish', () => {
             //queue shift
@@ -137,23 +140,22 @@ client.on('message', message => {
     }
 })
 
-async function execute(message) {
-    const voiceChannel = message.member.voice.channel
+function execute(message) {
     const args = message.content.split(' ')
     switch (args[0]) {
         case '=join':
             // ⚠ client.voice.connections.size == 0 => false 
             // bot greets when it comes to the first
-            if (!voiceChannel) {
-                await voiceChannel.join()
+            if (!client.voice.connections.size) {
+                message.member.voice.channel.join()
                 message.channel.send(embedMessage(message))
             } else return
             break
 
         case '=out':
         case '=disconnect':
-            if (voiceChannel) {
-                await voiceChannel.leave()
+            if (client.voice.connections.size) {
+                message.member.voice.channel.leave()
                 message.channel.send(embedMessage(message))
             } else return
             break
@@ -177,7 +179,7 @@ function embedMessage(message) {
                 .setDescription('You can check "=help" for commands')
             return embedJoin
         case '=out':
-        case 'disconect':
+        case '=disconect':
             const embedOut = new MessageEmbed()
                 .setTitle('Bye 😢')
                 .setColor(0x00ccff)
