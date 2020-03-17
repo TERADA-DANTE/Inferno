@@ -9,12 +9,11 @@ Dante's Original Discord Music bot
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
 
 # Commands
----
+
 
 ✅ = is Inferno's command syntax
-⚠ < > should be ignored.
 
----
+⚠ < > should be ignored.
 
 ## =play
 1. =play <Youtube-link>
@@ -41,11 +40,11 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 ## =join
 - Inferno joins your current voice channel. 
 
-## out, disconnect
+## =out, disconnect
 - Inferno leaves current voice channel.
 - This command is valid when you are on the same voice channel.
 
-## help
+## =help
 - Show above command description.
 
 # Dependency
