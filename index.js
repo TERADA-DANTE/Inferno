@@ -1,16 +1,24 @@
-// initial setting
+// Import 
 const {
     Client,
     MessageEmbed
 } = require(`discord.js`)
 const client = new Client()
-const ytdl = require('ytdl-core')
-const queue = new Map()
-
-
 const config = require('./config')
+const ytdl = require('ytdl-core')
+//
 
+// Variables
+const servers = {}
+//
+
+// Login
+client.login(config.TOKEN)
+//
+
+// Server status
 client.once('ready', () => {
+    client.user.setActivity('Danteが作る最中')
     console.log('Ready!')
 })
 client.once('reconneting', () => {
@@ -19,98 +27,163 @@ client.once('reconneting', () => {
 client.once('disconnect', () => {
     console.log('Disconnect!')
 })
+//
 
-client.login(config.TOKEN)
-// initial setting 
 
-// get message from user
-client.on('message', async message => {
+// Main 
+client.on('message', message => {
 
-    const serverQueue = queue.set(message.guild.id)
-    // prevent direct message
-    if (message.channel.type === 'dm') return false
-    // only starts with prefix 
-    // is this necessary? - no
-    // if (!message.content.startsWith === config.prefix) console.log('ee')
-    if (message.content.startsWith(`${config.prefix}play`)) {
-        execute(message, serverQueue)
-        return
+    // Voice only works in guilds, if the message does not come from a guild,
+    if (!message.guild) return
+
+    // Command
+    if (message.content.startsWith('=')) {
+        const args = message.content.split(' ')
+        switch (args[0]) {
+            // COMMAND - =play
+            case '=play':
+                // Only '=play'
+                if (!args[1]) {
+                    message.reply('=play WHAT TO PLAY🎵')
+                    return
+                }
+                // 'Member not in voice channel
+                if (!message.member.voice.channel) {
+                    message.reply('You need to join a voice channel first! 🚸')
+                    return
+                }
+                // server identity set
+                if (!servers[message.guild.id]) {
+                    servers[message.guild.id] = {
+                        queue: []
+                    }
+                }
+                // variable for queue
+                const server = servers[message.guild.id]
+
+                // Youtube link check
+                if (/[a-zA-Z0-9-_]{11}/.test(args[1]) === false) {
+                    // this is not youtube link
+                    message.reply("this is not a youtube link!")
+                } else {
+                    // this is youtube link
+                    // bot comes in voice channel
+                    // it returns promise(connection)
+                    // so it has to be called ALWAYS!
+                    message.member.voice.channel.join()
+                        .then((connection) => {
+                            if (server.queue[0]) {
+                                server.queue.push(args[1])
+                            } else {
+                                server.queue.push(args[1])
+                                play(connection, message)
+                            }
+                        })
+                }
+                break
+            case '=skip':
+                execute(message, servers)
+                break
+            case '=stop':
+                execute(message, servers)
+                break
+            case '=clear':
+                execute(message, servers)
+                break
+            case '=join':
+                execute(message)
+                break
+            case '=out':
+            case '=disconnect':
+                execute(message)
+                break
+            default:
+                message.channel.send('Invalid command!')
+                break
+        }
     }
+    // COMMAND - =play
+    async function play(connection, message) {
+        // variables
+        const server = servers[message.guild.id]
+        const songInfo = await ytdl.getInfo(server.queue[0])
+        const stream = ytdl(server.queue[0])
 
-    if (message.content === config.prefix + 'help') {
-        const embed = new MessageEmbed()
-            .setTitle('Test Title')
-            .setColor(0xff0000)
-            .setDescription('Ipsem Lorem');
-        message.channel.send(embed);
+        // streaming
+        server.dispatcher = connection.play(stream, {
+            filter: "audioonly"
+        })
+
+        // song info
+        message.channel.send(embedMessage({
+            content: '=play',
+            songInfo: {
+                desc: songInfo.title,
+            }
+        }))
+
+
+        // handleFinish
+        server.dispatcher.on('finish', () => {
+            //queue shift
+            server.queue.shift()
+
+            if (server.queue[0]) {
+                play(connection, message)
+            } else {
+                // queue end
+                message.channel.send("Playlist is clear ✅")
+            }
+        })
     }
 })
 
-async function execute(message, serverQueue) {
-    const args = message.content.split(' ')
+async function execute(message) {
     const voiceChannel = message.member.voice.channel
-    if (!voiceChannel) return message.channel.send('You are not in voice channel 💥')
-    // on permission
-    // const permissions = voiceChannel.permissionsFor(message.client.user)
-    // if (!permissions.has('CONNECT') || !permissions.has('SPEAK')) {
-    //     return message.channel.send('You have no permission 🚫')
-    // }
-    const musicInfo = await ytdl.getInfo(args[1])
-    const music = {
-        title: musicInfo.title,
-        url: musicInfo.video_url,
-        length: `about ${Math.ceil(musicInfo.length_seconds/60)}min`
+    const args = message.content.split(' ')
+    switch (args[0]) {
+        case '=join':
+            // ⚠ client.voice.connections.size == 0 => false 
+            // bot greets when it comes to the first
+            if (!voiceChannel) {
+                await voiceChannel.join()
+                message.channel.send(embedMessage(message))
+            } else return
+            break
+
+        case '=out':
+        case '=disconnect':
+            if (voiceChannel) {
+                await voiceChannel.leave()
+                message.channel.send(embedMessage(message))
+            } else return
+            break
     }
-    // Queue
-    if (!serverQueue) {
-        const queueConstruct = {
-            textChannel: message.channel,
-            voiceChannel: voiceChannel,
-            connection: null,
-            musics: [],
-            volume: 50,
-            playing: true,
-        }
-
-        queue.set(message.guild.id, queueConstruct)
-
-        queueConstruct.musics.push(music)
-
-        try {
-            queueConstruct.connection = await voiceChannel.join()
-            play(message.guild, queueConstruct.musics[0])
-        } catch (error) {
-            console.log(error)
-            queue.delete(message.guild.id)
-            return message.channel.send(error)
-        }
-    } else {
-        serverQueue.musics.push(music)
-        console.log(serverQueue.musics)
-        return message.channel.send(`${music.title} has been added to the queue !`)
-    }
-    // Queue
-}
-// get message from user
-
-// function play
-function play(guild, music) {
-    const serverQueue = queue.get(guild.id);
-    if (!music) {
-        serverQueue.voiceChannel.leave();
-        queue.delete(guild.id);
-        return;
-    }
-    const dispatcher = serverQueue.connection.playStream(ytdl(music.url))
-        .on('end', () => {
-            console.log('Music ended!');
-            serverQueue.musics.shift();
-            play(guild, serverQueue.musics[0]);
-        })
-        .on('error', error => {
-            console.error(error);
-        });
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 }
 
-// function play
+
+function embedMessage(message) {
+    const args = message.content.split(' ')
+    switch (args[0]) {
+        case '=play':
+            const embedPlay = new MessageEmbed()
+                .setTitle('You are listening to ...')
+                .setColor(0x00ccff)
+                .setDescription(`${message.songInfo.desc}`)
+            return embedPlay
+        case '=join':
+            const embedJoin = new MessageEmbed()
+                .setTitle('Hello! This is Inferno 🔥')
+                .setColor(0x00ccff)
+                .setDescription('You can check "=help" for commands')
+            return embedJoin
+        case '=out':
+        case 'disconect':
+            const embedOut = new MessageEmbed()
+                .setTitle('Bye 😢')
+                .setColor(0x00ccff)
+                .setDescription('See you again')
+            return embedOut
+    }
+
+}
