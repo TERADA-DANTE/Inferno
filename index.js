@@ -6,15 +6,12 @@ const {
 const client = new Client()
 const config = require('./config')
 const ytdl = require('ytdl-core')
-//
 
 // Variables
 const servers = {}
-//
 
 // Login
 client.login(config.TOKEN)
-//
 
 // Server status
 client.once('ready', () => {
@@ -27,20 +24,19 @@ client.once('reconneting', () => {
 client.once('disconnect', () => {
     console.log('Disconnect!')
 })
-//
-
 
 // Main 
 client.on('message', message => {
-
     // Voice only works in guilds, if the message does not come from a guild,
     if (!message.guild) return
 
     // Command
     if (message.content.startsWith('=')) {
         const args = message.content.split(' ')
+
         switch (args[0]) {
             // COMMAND - =play
+            // ⚠ play function needs to be idealized
             case '=play':
                 // Only '=play'
                 if (!args[1]) {
@@ -52,6 +48,7 @@ client.on('message', message => {
                     message.reply('You need to join a voice channel first! 🚸')
                     return
                 }
+
                 // server identity set
                 if (!servers[message.guild.id]) {
                     servers[message.guild.id] = {
@@ -83,49 +80,45 @@ client.on('message', message => {
                 }
                 break
 
+                // set volume
+            case '=volume':
+                volume(message)
+                break
+
                 // skip one track
             case '=skip':
-                var server = servers[message.guild.id]
-
-                if (server.queue[0]) message.channel.send("Music Skipped...")
-                if (server.dispatcher) server.dispatcher.end()
+                skip(message)
                 break
 
                 // clear playlist 
             case '=clear':
-                var server = servers[message.guild.id]
-                if (server.queue[0]) {
-                    message.channel.send("Playlist clear ☑")
-                    server.queue = []
-                }
-                break
-
-                // set volume
-            case '=volume':
-                var server = servers[message.guild.id]
-                if (!(args[1]) || args[1] > 200 || args[1] < 0) {
-                    message.channel.send("Volumd range: 0 ~ 200")
-                    return
-                }
-                server.dispatcher.setVolume(args[1] / 100)
-                message.channel.send(`Current Volume : ${args[1]}`)
+                clear(message)
                 break
 
                 // join
             case '=join':
-                execute(message)
+                join(message)
                 break
 
                 // out
             case '=out':
             case '=disconnect':
-                execute(message)
+                out(message)
                 break
+
+                //help
+            case '=help':
+                help(message)
+                break
+
+                //default - invaild command
             default:
-                message.channel.send('Invalid command!')
+                message.channel.send(embedMessage(message))
                 break
         }
     }
+
+    // Below is COMMAND function
     // COMMAND - =play
     async function play(connection, message) {
         // variables
@@ -161,37 +154,77 @@ client.on('message', message => {
                 message.channel.send("Playlist end ✅")
                 setTimeout(() => {
                     if (client.voice.connections.size) {
-                        message.channel.send("Inferno is goint to sleep 💤")
+                        message.channel.send("Inferno is going to sleep 💤")
                         message.member.voice.channel.leave()
                     }
                 }, 60000)
             }
         })
     }
-})
 
-function execute(message) {
-    const args = message.content.split(' ')
-    switch (args[0]) {
-        case '=join':
-            // ⚠ client.voice.connections.size == 0 => false 
-            // bot greets when it comes to the first
-            if (!client.voice.connections.size) {
-                message.member.voice.channel.join()
-                message.channel.send(embedMessage(message))
-            } else return
-            break
-
-        case '=out':
-        case '=disconnect':
-            if (client.voice.connections.size) {
-                message.member.voice.channel.leave()
-                message.channel.send(embedMessage(message))
-            } else return
-            break
+    // COMMAND - =skip
+    function skip(message) {
+        if (servers[message.guild.id]) {
+            var server = servers[message.guild.id]
+            if (server.queue[0]) message.channel.send("Music Skipped...")
+            if (server.dispatcher) server.dispatcher.end()
+        }
     }
-}
 
+    // COMMAND - =clear
+    function clear(message) {
+        if (servers[message.guild.id]) {
+            var server = servers[message.guild.id]
+            if (server.queue[0]) {
+                message.channel.send("Playlist clear ☑")
+                server.queue = []
+            }
+        }
+    }
+
+    // COMMAND - =volume
+    function volume(message) {
+        if (servers[message.guild.id]) {
+            const args = message.content.split(' ')
+            if (server.queue[0]) {
+                if (!(args[1]) || args[1] > 200 || args[1] < 0) {
+                    message.reply("Hey 💥 Volume range: 0 ~ 200")
+                    return
+                }
+                server.dispatcher.setVolume(args[1] / 100)
+                message.channel.send(`Current Volume : ${args[1]} <0 ~ 200>`)
+            }
+        }
+    }
+
+    // COMMAND - =join
+    function join(message) {
+        if (message.member.voice.channel !== message.guild.me.voice.channel) {
+            message.member.voice.channel.join()
+            message.channel.send(embedMessage(message))
+        } else return
+    }
+
+    // COMMAND - =out, =disconnect ⚠ this commands clear the queue
+    function out(message) {
+        if (message.member.voice.channel === message.guild.me.voice.channel) {
+            if (servers[message.guild.id]) {
+                message.member.voice.channel.leave()
+                server.queue = []
+            } else {
+                message.member.voice.channel.leave()
+            }
+            message.channel.send(embedMessage(message))
+        } else return
+    }
+
+    function help(message) {
+        message.channel.send("```ini\n[Hello, This is Inferno.]```")
+        message.channel.send("```css\n= is Inferno's command syntax\n[< > should be ignored]```")
+        message.channel.send("```ini\n[1. =play <Youtube-link>]\n - It plays provided youtube link(audio-only)\n[2. =play <word>]\n 🔥 This function is still developing\n - it plays the most related search result on youtube if available\n[3. =skip]\n - it skips current music in the playlist.\n[4. =clear]\n - it clears the playlist.\n[5. =volume <0~200>]\n - it controls the currently playing music volume\n[6. =join]\n - Inferno joins your current voice channel.\n[7. =out, =disconnect]\n - Inferno leaves current voice channel.\n - This command is valid when you are on the same voice channel.```")
+    }
+
+})
 
 function embedMessage(message) {
     const args = message.content.split(' ')
@@ -200,21 +233,27 @@ function embedMessage(message) {
             const embedPlay = new MessageEmbed()
                 .setTitle('You are listening to ...')
                 .setColor(0x00ccff)
-                .setDescription(`${message.songInfo.desc}`)
+                .setDescription(`▶ ${message.songInfo.desc}`)
             return embedPlay
         case '=join':
             const embedJoin = new MessageEmbed()
-                .setTitle('Hello! This is Inferno 🔥')
+                .setTitle('Hello! This is Inferno')
                 .setColor(0x00ccff)
-                .setDescription('You can check "=help" for commands')
+                .setDescription('🔥 You can check "=help" for commands')
             return embedJoin
         case '=out':
         case '=disconect':
             const embedOut = new MessageEmbed()
-                .setTitle('Bye 😢')
+                .setTitle('Bye...')
                 .setColor(0x00ccff)
-                .setDescription('See you again')
+                .setDescription('☑ Playlist initialized')
             return embedOut
+        default:
+            const embedDefault = new MessageEmbed()
+                .setTitle('Invalid Command')
+                .setColor(0x00ccff)
+                .setDescription("✅ Check Inferno's command : =help")
+            return embedDefault
     }
 
 }
