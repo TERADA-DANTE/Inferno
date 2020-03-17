@@ -82,6 +82,7 @@ client.on('message', message => {
                         })
                 }
                 break
+
                 // skip one track
             case '=skip':
                 var server = servers[message.guild.id]
@@ -89,6 +90,7 @@ client.on('message', message => {
                 if (server.queue[0]) message.channel.send("Music Skipped...")
                 if (server.dispatcher) server.dispatcher.end()
                 break
+
                 // clear playlist 
             case '=clear':
                 var server = servers[message.guild.id]
@@ -97,12 +99,24 @@ client.on('message', message => {
                     server.queue = []
                 }
                 break
-            case '=clear':
-                execute(message, servers)
+
+                // set volume
+            case '=volume':
+                var server = servers[message.guild.id]
+                if (!(args[1]) || args[1] > 200 || args[1] < 0) {
+                    message.channel.send("Volumd range: 0 ~ 200")
+                    return
+                }
+                server.dispatcher.setVolume(args[1] / 100)
+                message.channel.send(`Current Volume : ${args[1]}`)
                 break
+
+                // join
             case '=join':
                 execute(message)
                 break
+
+                // out
             case '=out':
             case '=disconnect':
                 execute(message)
@@ -121,8 +135,11 @@ client.on('message', message => {
 
         // streaming
         server.dispatcher = connection.play(stream, {
-            filter: "audioonly"
+            filter: "audioonly",
         })
+
+        // default volume : 30
+        server.dispatcher.setVolume(30 / 100)
 
         // song info
         message.channel.send(embedMessage({
