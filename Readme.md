@@ -62,6 +62,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 2. @discordjs/opus || opusscript
 3. ffmpeg-static
 4. ytdl-core
+5. yt-search
 
 # .gitignore
 /config.js/
