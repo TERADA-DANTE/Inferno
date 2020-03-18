@@ -5,6 +5,8 @@
 # Inferno
 Dante's Original Discord Music bot
 
+!(Inferno comes from DMC Dante)[https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg]
+
 # Overview
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
 
@@ -17,25 +19,21 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 
 ## =play
 1. =play <Youtube-link>
-- It plays provided youtube link(audio-only).
+- This command plays provided youtube link(audio-only).
 
 2. =play <word>
-⚠ This function is still developing
-- it plays the most related search result on youtube if available.
-
+⚠ This command is still developing
+- This command plays the most related search result on youtube if available.
 
 ## =skip
-- it skips current music in the playlist.
+- This command skips current music in the playlist.
 
 ## =clear
-- it clears the playlist.
+- This command clears the playlist.
 
 ## =volume
-1. =volume 30
-- it controls current music volume on scale of 30 which will be devided by 100 automatically.
-
-2. =volume 500
-- volume range is from 0 to 200.
+- This command controls the current music volume on scale of 0 to 200 which will be devided by 100 automatically.
+- Default volume is 30
 
 ## =join
 - Inferno joins your current voice channel. 
@@ -43,6 +41,9 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 ## =out, disconnect
 - Inferno leaves current voice channel.
 - This command is valid when you are on the same voice channel.
+
+## =queue
+- This shows current playlist
 
 ## =help
 - Show above command description.

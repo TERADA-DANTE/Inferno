@@ -15,13 +15,16 @@ client.login(config.TOKEN)
 
 // Server status
 client.once('ready', () => {
-    client.user.setActivity('Danteが作る最中')
+    client.user.setActivity('Danteがバグ探し')
     console.log('Ready!')
 })
 client.once('reconneting', () => {
+    client.user.setActivity('Infernoが布団から飛び出し')
     console.log('reconnecting!')
 })
 client.once('disconnect', () => {
+    // meaningless
+    client.user.setActivity('Inferno is sleeping')
     console.log('Disconnect!')
 })
 
@@ -106,6 +109,11 @@ client.on('message', message => {
                 out(message)
                 break
 
+                // qeue
+            case '=queue':
+                queue(message)
+                break
+
                 //help
             case '=help':
                 help(message)
@@ -123,7 +131,7 @@ client.on('message', message => {
     async function play(connection, message) {
         // variables
         var server = servers[message.guild.id]
-        const songInfo = await ytdl.getInfo(server.queue[0])
+        const songInfo = await ytdl.getBasicInfo(server.queue[0])
         const stream = ytdl(server.queue[0])
 
         // streaming
@@ -205,23 +213,50 @@ client.on('message', message => {
         } else return
     }
 
+    // COMMAND - =queue
+    async function queue(message) {
+        if (servers[message.guild.id] && message.guild.me.voice.channel) {
+            var server = servers[message.guild.id]
+            const playlist = []
+            let count = 1
+            message.reply("Playlist Loading...")
+
+            // async await loop
+            for (const item of server.queue) {
+                const musicInfo = await ytdl.getBasicInfo(item)
+                playlist.push(`${count}. ${musicInfo.title}\n`)
+                count++
+            }
+
+            // queue info
+            message.channel.send(embedMessage({
+                content: '=queue',
+                queueInfo: {
+                    desc: playlist,
+                }
+            }))
+        } else {
+            return
+        }
+    }
     // COMMAND - =out, =disconnect ⚠ this commands clear the queue
     function out(message) {
         if (message.member.voice.channel === message.guild.me.voice.channel) {
             if (servers[message.guild.id]) {
-                message.member.voice.channel.leave()
+                var server = servers[message.guild.id]
                 server.queue = []
+                message.member.voice.channel.leave()
             } else {
                 message.member.voice.channel.leave()
             }
-            message.channel.send(embedMessage(message))
         } else return
     }
 
     function help(message) {
         message.channel.send("```ini\n[Hello, This is Inferno.]```")
         message.channel.send("```css\n= is Inferno's command syntax\n[< > should be ignored]```")
-        message.channel.send("```ini\n[1. =play <Youtube-link>]\n - It plays provided youtube link(audio-only)\n[2. =play <word>]\n 🔥 This function is still developing\n - it plays the most related search result on youtube if available\n[3. =skip]\n - it skips current music in the playlist.\n[4. =clear]\n - it clears the playlist.\n[5. =volume <0~200>]\n - it controls the currently playing music volume\n[6. =join]\n - Inferno joins your current voice channel.\n[7. =out, =disconnect]\n - Inferno leaves current voice channel.\n - This command is valid when you are on the same voice channel.```")
+        message.channel.send("```ini\n[1. =play <Youtube-link>]\n - It plays provided youtube link(audio-only)\n[2. =play <word>]\n 🔥 This function is still developing\n - it plays the most related search result on youtube if available\n[3. =skip]\n - it skips current music in the playlist.\n[4. =clear]\n - it clears the playlist.\n[5. =volume <0~200>]\n - it controls the currently playing music volume\n[6. =join]\n - Inferno joins your current voice channel.\n[7. =out, =disconnect]\n - Inferno leaves current voice channel.\n - This command is valid when you are on the same voice channel.\n[8. =queue]\n - This shows current playlist\n```")
+        message.channel.send("```css\n[ Develper's note : https://github.com/TERADA-DANTE/Inferno ]\n [Feedback to Dante🔥]```")
     }
 
 })
@@ -235,12 +270,14 @@ function embedMessage(message) {
                 .setColor(0x00ccff)
                 .setDescription(`▶ ${message.songInfo.desc}`)
             return embedPlay
+
         case '=join':
             const embedJoin = new MessageEmbed()
                 .setTitle('Hello! This is Inferno')
                 .setColor(0x00ccff)
                 .setDescription('🔥 You can check "=help" for commands')
             return embedJoin
+
         case '=out':
         case '=disconect':
             const embedOut = new MessageEmbed()
@@ -248,6 +285,14 @@ function embedMessage(message) {
                 .setColor(0x00ccff)
                 .setDescription('☑ Playlist initialized')
             return embedOut
+
+        case '=queue':
+            const embedQueue = new MessageEmbed()
+                .setTitle('Current Playlist 🎹')
+                .setColor(0x00ccff)
+                .setDescription(message.queueInfo.desc.length === 0 ? "Playlist is empty!" : message.queueInfo.desc)
+            return embedQueue
+
         default:
             const embedDefault = new MessageEmbed()
                 .setTitle('Invalid Command')
