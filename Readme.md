@@ -22,6 +22,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 - This command plays provided youtube link(audio-only).
 
 2. =play <word>
+   
 ⚠ This command is still developing
 - This command plays the most related search result on youtube if available.
 
