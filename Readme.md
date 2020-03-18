@@ -10,6 +10,13 @@ Dante's Original Discord Music bot
 # Overview
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
 
+# Installation
+🔰 You should have your own discord bot
+1. git clone this respository
+2. npm install
+3. deploy on heroku
+4. be Groovy with Inferno ❤
+   
 # Commands
 
 
@@ -58,5 +65,11 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 # .gitignore
 /config.js/
 
+~~~javascript
+export.module = {
+    TOKEN: <your discord bot token here>,
+    syntax: '='
+}
+~~~
 # License 
 MIT
