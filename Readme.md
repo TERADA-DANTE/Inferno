@@ -7,6 +7,7 @@
 # Inferno
 Dante's Original Discord Music bot
 
+[Click here to let Inferno join to your server!](https://discordapp.com/oauth2/authorize?&client_id=688762089485107241&scope=bot&permissions=8)
 
 # Overview
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
@@ -44,12 +45,9 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 - This command controls the current music volume on scale of 0 to 200 which will be devided by 100 automatically.
 - Default volume is 30
 
-## =join
-- Inferno joins your current voice channel. 
-
-## =out, disconnect
+## =leaves
 - Inferno leaves current voice channel.
-- This command is valid when you are on the same voice channel.
+- This clears current playlist
 
 ## =queue
 - This shows current playlist
@@ -65,12 +63,12 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 5. yt-search
 
 # .gitignore
-/config.js/
+config.json
 
 ~~~javascript
-export.module = {
-    TOKEN: <your discord bot token here>,
-    syntax: '='
+{
+    "token": "<your discord bot token here>",
+    "syntax": "<your syntax>" // Inferno uses =
 }
 ~~~
 # License 
