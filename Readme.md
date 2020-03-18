@@ -2,10 +2,11 @@
 ![npm](https://badgen.net/badge/npm/v6.13.4/green)
 ![version](https://badgen.net/badge/version/beta/blue)
 
+![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
+
 # Inferno
 Dante's Original Discord Music bot
 
-![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
 
 # Overview
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
