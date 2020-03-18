@@ -9,6 +9,7 @@ const {
     token,
     prefix
 } = config
+
 const servers = {}
 const COMMAND = ['play', 'skip', 'queue', 'leave', 'volume', 'help', 'clear']
 
@@ -37,6 +38,7 @@ client.on('message', message => {
     // Variables
     // args separation 
     let args = message.content.split(' ')
+
     // command - =play => play
     let command = args[0].slice(prefix.length)
 

@@ -33,7 +33,8 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 2. =play <word>
    
 ⚠ This command is still developing
-- This command plays the most related search result on youtube if available.
+- This command shows the list of searched results on youtube if available.
+- You can pick this with number.
 
 ## =skip
 - This command skips current music in the playlist.

@@ -3,6 +3,7 @@ const ytdl = require('ytdl-core')
 const {
     MessageEmbed
 } = require(`discord.js`)
+const search = require('./search.js')
 
 // play function
 exports.run = async (client, message, args, option) => {
@@ -12,11 +13,16 @@ exports.run = async (client, message, args, option) => {
     // check if args[1] exists
     if (!args[1]) return message.reply('=play WHAT TO PLAY 🔀')
 
-    /*
-    // check if youtube link available
-    let validate = await ytdl.validateURL(args[1])
-    if (!validate) return message.reply('This link is not playable 🆖')
-    */
+
+    // check if youtube link available unless it is from search
+    if (!option.isSearch) {
+        let validate = await ytdl.validateURL(args[1])
+        if (!validate) {
+            search.run(client, message, args, option)
+            return
+        }
+    }
+
 
     // Fetch option variable
     let {
