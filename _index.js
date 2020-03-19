@@ -6,14 +6,14 @@ const {
     MessageEmbed
 } = require(`discord.js`)
 const client = new Client()
-const config = require('./config')
+const config = require('./config.json')
 const ytdl = require('ytdl-core')
 
 // Variables
 const servers = {}
 
 // Login
-client.login("Njg4NzYyMDg5NDg1MTA3MjQx.Xm5J3w.rS3QXoyYkFsLqXUtXDquFmKiwMg")
+client.login(config.token)
 
 // Server status
 client.once('ready', () => {
