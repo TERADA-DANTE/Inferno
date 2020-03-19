@@ -15,12 +15,10 @@ exports.run = async (client, message, args, option) => {
 
 
     // check if youtube link available unless it is from search
-    if (!option.isSearch) {
-        let validate = await ytdl.validateURL(args[1])
-        if (!validate) {
-            search.run(client, message, args, option)
-            return
-        }
+    let validate = await ytdl.validateURL(args[1])
+    if (!validate) {
+        search.run(client, message, args, option)
+        return
     }
 
 
