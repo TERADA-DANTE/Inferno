@@ -1,29 +1,27 @@
-![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
+<center>![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
 ![npm](https://badgen.net/badge/npm/v6.13.4/green)
 ![version](https://badgen.net/badge/version/beta/blue)
+</center>
 
-![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
+<center>![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)</center>
 
 # Inferno
 Dante's Original Discord Music bot
 
-[Click here to let Inferno join to your server!](https://discordapp.com/oauth2/authorize?&client_id=688762089485107241&scope=bot&permissions=8)
+[☑ Click here to let Inferno join to your server!](https://discordapp.com/oauth2/authorize?&client_id=688762089485107241&scope=bot&permissions=8)
 
 # Overview
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
 
-# Installation
+# Installation for Developers
 🔰 You should have your own discord bot
-1. git clone this respository
-2. npm install
-3. deploy on heroku
-4. be Groovy with Inferno ❤
-   
+1. Clone this respository
+2. Make `config.json` in root(Please refer to the .gitignore)
+3. Deploy
+4. Be Groovy with Inferno ❤
+
 # Commands
-
-
 ✅ = is Inferno's command syntax
-
 ⚠ < > should be ignored.
 
 ## =play
