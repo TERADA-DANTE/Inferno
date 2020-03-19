@@ -33,6 +33,7 @@ async function queue(message, server, data) {
     // async await loop
     for (const item of server.queue) {
         const musicInfo = await ytdl.getBasicInfo(item)
+        // To show queue requestor, need to modify server.queue. it has contain requester when requested
         data.playlist.push(`${data.count}. ${musicInfo.title}\n`)
         data.count++
     }
