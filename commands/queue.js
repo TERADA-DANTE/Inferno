@@ -33,7 +33,7 @@ async function queue(message, server, data) {
     // async await loop
     for (const item of server.queue) {
         const musicInfo = await ytdl.getBasicInfo(item)
-        data.playlist.push(`${data.count}. ${musicInfo.title} By ${message.author.username}\n`)
+        data.playlist.push(`${data.count}. ${musicInfo.title}\n`)
         data.count++
     }
     // Send Message 

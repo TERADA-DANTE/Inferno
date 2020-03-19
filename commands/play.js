@@ -13,7 +13,6 @@ exports.run = async (client, message, args, option) => {
     // check if args[1] exists
     if (!args[1]) return message.reply('=play WHAT TO PLAY 🔀')
 
-
     // check if youtube link available unless it is from search
     let validate = await ytdl.validateURL(args[1])
     if (!validate) {
@@ -69,9 +68,8 @@ exports.run = async (client, message, args, option) => {
         const embed = new MessageEmbed()
             .setTitle('Now playing')
             .setColor(0x00ccff)
-            .setDescription(`▶ ${songInfo.title} requested by ${message.author.username}`)
+            .setDescription(`▶ ${songInfo.title} requested by ${message.member.nickname}`)
         message.channel.send(embed)
-
 
         // handleFinish
         server.dispatcher.on('finish', () => {
