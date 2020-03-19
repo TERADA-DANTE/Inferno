@@ -69,7 +69,7 @@ client.on('message', message => {
         // Run command
         commandFile.run(client, message, args, option)
     } catch (error) {
-        console.log(error.message)
+        console.log(`${message.author.tag} made below error. \n${error.message}`)
     } finally {
         console.log(`${message.author.tag} ran this command`)
     }
