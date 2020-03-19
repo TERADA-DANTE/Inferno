@@ -1,9 +1,9 @@
-<center>![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
+![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
 ![npm](https://badgen.net/badge/npm/v6.13.4/green)
-![version](https://badgen.net/badge/version/beta/blue)
-</center>
+![version](https://badgen.net/badge/version/1.0.0/blue)
 
-<center>![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)</center>
+
+![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
 
 # Inferno
 Dante's Original Discord Music bot
@@ -70,5 +70,6 @@ config.json
     "syntax": "<your syntax>" // Inferno uses =
 }
 ~~~
+
 # License 
 MIT
