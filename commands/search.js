@@ -35,6 +35,8 @@ exports.run = (client, message, args, option) => {
         // createMessageCollector get the first arg as function which returns true
         const collector = message.channel.createMessageCollector(filter)
 
+        // This should return as quickly as possible to prevent bugs
+
         collector.once('collect', (m) => {
             // 0 to cancel
             if (m.content == 0) {
