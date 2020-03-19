@@ -50,7 +50,10 @@ client.on('message', message => {
     if (message.author.bot) return
 
     // if Invalid command
-    if (!COMMAND.includes(command)) message.reply("🔰 Invalid command! Check `=help`")
+    if (!COMMAND.includes(command)) {
+        message.reply("🔰 Invalid command! Check `=help`")
+        return
+    }
 
     // Command handle
     try {

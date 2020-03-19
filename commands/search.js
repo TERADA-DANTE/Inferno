@@ -3,6 +3,9 @@ const search = require('yt-search')
 
 // Search function
 exports.run = (client, message, args, option) => {
+    // Check if inferno is in voice channel
+    if (!message.guild.me.voice.channel) return
+
     search(args[1], (error, response) => {
         // Search error handle
         if (error) return message.channel.send("Sorry, Something went to wrong 🆖")
