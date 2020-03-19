@@ -71,7 +71,7 @@ client.on('message', message => {
     } catch (error) {
         console.log(`${message.author.tag} made below error. \n${error.message}`)
     } finally {
-        console.log(`${message.author.tag} ran this command`)
+        console.log(`${message.author.tag} ran ${message.content} command`)
     }
 })
 
