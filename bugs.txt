@@ -1,6 +1,4 @@
 // Bug report
-1. search.js
-- Collector should return as quickly as possible to avoid corrupting
-2. queue.js
+1. queue.js
 - when queue is end, servers object should disappear (harzadous??)
 

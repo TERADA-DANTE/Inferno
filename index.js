@@ -71,7 +71,9 @@ client.on('message', message => {
     } catch (error) {
         console.log(`${message.author.tag} made below error. \n${error.message}`)
     } finally {
+        const date = new Date()
         console.log(`${message.author.tag} ran ${message.content} command`)
+        console.log(date.getTime)
     }
 })
 

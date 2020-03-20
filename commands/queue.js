@@ -6,11 +6,14 @@ const ytdl = require('ytdl-core')
 
 // Queue function
 exports.run = (client, message, args, option) => {
-    // Check if inferno is in voice channel
+    // Check if bot is in voice channel
     if (!message.guild.me.voice.channel) return
 
+    // Check if user is in voice channel
+    if (!message.member.voice.channel) return message.reply("You are not in voice channel📶")
+
     // Check if user is in "same" voice channel
-    if (!message.member.voice.channel || message.member.voice.channel !== message.guild.me.voice.channel) return message.reply('Inferno is in another channel 📶')
+    if (message.member.voice.channel !== message.guild.me.voice.channel) return message.reply('Inferno is in another channel 📶')
 
     // Variables
     const {
@@ -23,8 +26,17 @@ exports.run = (client, message, args, option) => {
             playlist: [],
             count: 1,
         }
-        message.reply("`Playlist Loading...`")
-        queue(message, server, data)
+
+        // handle when playlist is empty
+        if (playlist.length === 0) {
+            return message.reply("Playlist is empty 🅿")
+        }
+        // Handle when playlist is not empty
+        else {
+            message.reply("`Playlist Loading...`")
+            queue(message, server, data)
+        }
+
     }
 }
 

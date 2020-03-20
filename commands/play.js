@@ -79,7 +79,6 @@ exports.run = async (client, message, args, option) => {
             if (server.queue[0]) {
                 play(connection, message)
             } else {
-
                 // Send Message 
                 const embed = new MessageEmbed()
                     .setTitle('Playlist end')
