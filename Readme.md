@@ -17,8 +17,9 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 🔰 You should have your own discord bot
 1. Clone this respository
 2. Make `config.json` in root(Please refer to the .gitignore)
-3. Deploy
-4. Be Groovy with Inferno ❤
+3. npm install
+4. Deploy(I would recommend Amazon AWS but heroku is also fine)
+5. Be Groovy with Inferno ❤
 
 # Commands
 ✅ = is Inferno's command syntax
