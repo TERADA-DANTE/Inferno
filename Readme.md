@@ -14,7 +14,7 @@ Dante's Original Discord Music bot
 Terada Dante's original discord youtube music bot. This is 100% free and open source. Feedbacks are always welcome.
 
 # Installation for Developers
-🔰 You should have your own discord bot
+🔰 You should have your own discord bot by customizing Inferno
 1. Clone this respository
 2. Make `config.json` in root(Please refer to the .gitignore)
 3. npm install
@@ -30,10 +30,8 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 - This command plays provided youtube link(audio-only).
 
 2. =play <word>
-   
-⚠ This command is still developing
 - This command shows the list of searched results on youtube if available.
-- You can pick this with number.
+- You can pick this with number or 0 to cancel.
 
 ## =skip
 - This command skips current music in the playlist.
@@ -61,6 +59,8 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 3. ffmpeg-static
 4. ytdl-core
 5. yt-search
+
+⚠ It could be slightly different based on your machine circumstance
 
 # .gitignore
 config.json
