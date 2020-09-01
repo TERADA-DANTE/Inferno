@@ -74,7 +74,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 4. ytdl-core
 5. yt-search
 
-⚠ It could be slightly different based on your machine circumstance
+⚠ Make sure to use npm i package@lastest
 
 # .gitignore
 
