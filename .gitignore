@@ -1,4 +1,5 @@
 config.json
-Inferno.pem
+_Inferno.pem
 bugs.txt
 /node_modules
+test.js
