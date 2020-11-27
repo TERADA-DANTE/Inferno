@@ -67,12 +67,18 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 
 # Dependency
 
-"@discordjs/opus": "^0.1.0",
-"discord.js": "^12.0.2",
-"ffmpeg-static": "^4.0.1",
-"yt-search": "^2.2.4",
+"@discordjs/opus": "^0.1.0"
+
+"discord.js": "^12.0.2"
+
+"ffmpeg-static": "^4.0.1"
+
+"yt-search": "^2.2.4"
+
 "ytdl-core": "^3.2.2"
+
 "NodeJS" : v12.18.3
+
 "NPM" : v6.14.8
 
 ⚠ Make sure to use npm i package@latest
