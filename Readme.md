@@ -5,7 +5,7 @@
 
 # Inferno
 
-Dante's Original Discord Music bot
+Dante's Original Discord Music bot powered by Discord API
 
 [☑ Click here to let Inferno join to your server!](https://discordapp.com/oauth2/authorize?&client_id=688762089485107241&scope=bot&permissions=8)
 
@@ -75,7 +75,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 "NodeJS" : v12.18.3
 "NPM" : v6.14.8
 
-⚠ Make sure to use npm i package@lastest
+⚠ Make sure to use npm i package@latest
 
 # .gitignore
 
@@ -91,6 +91,9 @@ config.json
 # Update logs
 
 - 2020-09-01 : Small fix, Playlist, play by ID needs to be added
+
+# Error report
+- FFMPEG error : try npm i @discordjs/opus
 
 # License
 
