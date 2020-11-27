@@ -81,7 +81,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 
 "NPM" : v6.14.8
 
-⚠ Make sure to use npm i package@latest
+⚠ Make sure all packages to be updated
 
 # .gitignore
 
@@ -99,7 +99,11 @@ config.json
 - 2020-09-01 : Small fix, Playlist, play by ID needs to be added
 
 # Error report
-- FFMPEG error : try npm i @discordjs/opus
+- FFMPEG error
+> npm i @discordjs/opus
+
+- unhandledError
+> npm update
 
 # License
 
