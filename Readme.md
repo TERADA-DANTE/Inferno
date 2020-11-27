@@ -1,6 +1,5 @@
 ![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
 ![npm](https://badgen.net/badge/npm/v6.13.4/green)
-![version](https://badgen.net/badge/version/1.0.0/blue)
 
 ![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
 
@@ -21,7 +20,7 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 1. Clone this respository
 2. Make `config.json` in root(Please refer to the .gitignore)
 3. npm install
-4. Deploy(I would recommend Amazon AWS but heroku is also fine)
+4. Deploy(Ubuntu Server 20.04 LTS (HVM), SSD Volume Type / Heroku is also fine)
 5. Be Groovy with Inferno ❤
 
 # Commands
@@ -68,14 +67,13 @@ Terada Dante's original discord youtube music bot. This is 100% free and open so
 
 # Dependency
 
-1. discord.js
-2. @discordjs/opus || opusscript
-3. ffmpeg-static
-4. ytdl-core
-5. yt-search
-
-- NodeJS : v12.18.3
-- NPM : v6.14.8
+"@discordjs/opus": "^0.1.0",
+"discord.js": "^12.0.2",
+"ffmpeg-static": "^4.0.1",
+"yt-search": "^2.2.4",
+"ytdl-core": "^3.2.2"
+"NodeJS" : v12.18.3
+"NPM" : v6.14.8
 
 ⚠ Make sure to use npm i package@lastest
 
