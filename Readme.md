@@ -8,7 +8,7 @@
 Dante's Original Discord Music bot powered by Discord API
 
 ~[☑ Click here to let Inferno join to your server!](https://discordapp.com/oauth2/authorize?&client_id=688762089485107241&scope=bot&permissions=8)~
-> :warning: **This is boilerplate**: Create your own BOT!
+> **This is boilerplate**: Create your own BOT!
 
 # Overview
 
