@@ -1,6 +1,3 @@
-![discord_badge](https://badgen.net/badge/icon/discord?icon=discord&label)
-![npm](https://badgen.net/badge/npm/v6.13.4/green)
-
 ![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
 
 # Inferno
