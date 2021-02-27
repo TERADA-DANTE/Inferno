@@ -1,6 +1,6 @@
 ![Inferno comes from DMC Dante](https://p4.wallpaperbetter.com/wallpaper/492/428/886/dante-dmc-devil-may-cry-wallpaper-preview.jpg)
 
-# Inferno🐳
+# Inferno
 
 Dante's Original Discord Music bot powered by Discord API
 
