@@ -1,4 +1,4 @@
-// This is beta version
+// Deprecated
 
 // Import 
 const {
