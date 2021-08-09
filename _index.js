@@ -292,7 +292,6 @@ function embedMessage(message) {
                 .setDescription("✅ Check Inferno's command : =help")
             return embedDefault
     }
-
 }
 
 
