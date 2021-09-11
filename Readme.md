@@ -108,4 +108,3 @@ config.json
 # License
 
 MIT
-
