@@ -93,7 +93,6 @@ config.json
 }
 ```
 
-
 # Update logs
 
 - 2020-09-01 : Small fix, Playlist, play by ID needs to be added
